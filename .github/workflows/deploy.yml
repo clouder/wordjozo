@@ -37,7 +37,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "."
           target: "${{ secrets.VPS_PATH }}"
           strip_components: 1
@@ -47,7 +47,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.VPS_PATH }}
             php artisan config:cache
