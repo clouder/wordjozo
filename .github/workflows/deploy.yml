@@ -18,11 +18,6 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install frontend dependencies & build
-        run: |
-          npm ci
-          npm run build
-
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -31,6 +26,11 @@ jobs:
 
       - name: Install PHP dependencies
         run: composer install --no-dev --optimize-autoloader
+
+      - name: Install frontend dependencies & build
+        run: |
+          npm ci
+          npm run build
 
       - name: Deploy to VPS via SSH
         uses: appleboy/scp-action@v0.1.7
