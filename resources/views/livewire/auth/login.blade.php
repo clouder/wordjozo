@@ -49,4 +49,13 @@
             <flux:link :href="route('register')" wire:navigate>{{ __('Sign up') }}</flux:link>
         </div>
     @endif
+    <flux:link :href="route('auth.socialite.redirect', ['provider' => 'github'])" wire:navigate class="text-center text-sm text-zinc-600 dark:text-zinc-400">
+        {{ __('Log in with GitHub') }}
+    </flux:link>
+    <flux:link :href="route('auth.socialite.redirect', ['provider' => 'google'])" wire:navigate class="text-center text-sm text-zinc-600 dark:text-zinc-400">
+        {{ __('Log in with Google') }}
+    </flux:link>
+    <flux:link :href="route('auth.socialite.redirect', ['provider' => 'facebook'])" wire:navigate class="text-center text-sm text-zinc-600 dark:text-zinc-400">
+        {{ __('Log in with Facebook') }}
+    </flux:link>
 </div>
