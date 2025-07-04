@@ -53,13 +53,13 @@
     <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">
         {{ __('or sign in socially') }}
     </div>
-    <flux:button :href="route('auth.socialite.redirect', ['provider' => 'google'])" wire:navigate>
+    <flux:button :href="route('auth.socialite.redirect', ['provider' => 'google'])">
         {{ __('Sign in with Google') }}
     </flux:button>
-    <flux:button :href="route('auth.socialite.redirect', ['provider' => 'facebook'])" wire:navigate>
+    <flux:button :href="route('auth.socialite.redirect', ['provider' => 'facebook'])">
         {{ __('Sign in with Facebook') }}
     </flux:button>
-    <flux:button :href="route('auth.socialite.redirect', ['provider' => 'github'])" wire:navigate>
+    <flux:button :href="route('auth.socialite.redirect', ['provider' => 'github'])">
         {{ __('Sign in with GitHub') }}
     </flux:button>
 </div>
