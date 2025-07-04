@@ -73,7 +73,7 @@ Route::get('auth/{provider}/callback', function (string $provider) {
 
     auth()->login($existingUser);
 
-    return redirect()->route('dashboard')->with('success', 'Logged in with GitHub successfully!');
-})->name('auth.github.callback');
+    return redirect()->route('books.index')->with('success', 'Logged in with GitHub successfully!');
+})->name('auth.socialite.callback');
 
 require __DIR__.'/auth.php';
