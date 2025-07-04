@@ -19,6 +19,7 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
     Route::get('books', \App\Livewire\Books\Index::class)->name('books.index');
+    Route::get('books/{book}', \App\Livewire\Books\Show::class)->name('books.show');
 });
 
 Route::middleware(['auth'])->group(function () {
