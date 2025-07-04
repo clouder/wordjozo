@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->tinyInteger('chapter_count');
+            $table->unsignedTinyInteger('chapter_count');
             $table->timestamps();
         });
 
