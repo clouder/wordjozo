@@ -12,8 +12,10 @@ class Show extends Component
     public $summarized;
     public $chapters;
 
-    public function mount()
+    public function mount(Book $book)
     {
+        $this->book = $book;
+
         $this->chapters = range(1, $this->book->chapter_count);
 
         $this->summarized =  $this->book->chapters()

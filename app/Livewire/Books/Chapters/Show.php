@@ -13,8 +13,10 @@ class Show extends Component
     public $summary;
     public $chapter_number;
 
-    public function mount()
+    public function mount(Book $book)
     {
+        $this->book = $book;
+
         $this->chapter_number = request()->route('chapter');
         if ($this->chapter_number > $this->book->chapter_count) {
             abort(404, 'Chapter not found');
