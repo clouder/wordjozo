@@ -20,7 +20,7 @@
                     />
                     <div class="absolute inset-0 flex items-center justify-center align-middle">
                         <span class="text-3xl font-semibold text-gray-800 dark:text-gray-200">{{ $chapter['number'] }}</span>
-                        <flux:link wire:navigate href="{{ route('books.chapters.show', ['book' => $book->id, 'chapter' => $chapter['number']]) }}" class="absolute w-full h-full"></flux:link>
+                        <flux:link href="{{ route('books.chapters.show', ['book' => $book->id, 'chapter' => $chapter['number']]) }}" class="absolute w-full h-full"></flux:link>
                     </div>
                 </div>
             @endforeach
