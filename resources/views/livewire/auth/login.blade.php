@@ -56,9 +56,9 @@
     <flux:button :href="route('auth.socialite.redirect', ['provider' => 'google'])">
         {{ __('Sign in with Google') }}
     </flux:button>
-    <flux:button :href="route('auth.socialite.redirect', ['provider' => 'facebook'])">
+    {{-- <flux:button :href="route('auth.socialite.redirect', ['provider' => 'facebook'])">
         {{ __('Sign in with Facebook') }}
-    </flux:button>
+    </flux:button> --}}
     <flux:button :href="route('auth.socialite.redirect', ['provider' => 'github'])">
         {{ __('Sign in with GitHub') }}
     </flux:button>
