@@ -49,8 +49,8 @@
         x-show="showSummary"
         class="fixed top-0 left-0 flex h-full w-full flex-1 flex-col gap-4 rounded-xl p-6 bg-zinc-900/10 bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 backdrop-saturate-100 backdrop-contrast-100"
     >
-            <div class="grid auto-rows-min gap-4">
-                <flux:textarea wire:model.live.debounce.500ms="summary" label="Summary" rows="auto" class="w-full" />
+            <div class="grid auto-rows-min gap-4 bg-opacity-100 bg-zinc-900 mt-10">
+                <flux:textarea wire:model.live.debounce.500ms="summary" rows="auto" class="w-full" />
             </div>
     </div>
     <div id="sumsum" class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
