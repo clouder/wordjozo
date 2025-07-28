@@ -24,7 +24,6 @@
         if (this.showSummary) {
             history.pushState({ dummy: true }, '', location.href);
             this.scrollPosition = { x: window.scrollX, y: window.scrollY };
-            // send focus to #sumsum > textarea
             const textarea = document.querySelector('#floating-sum textarea');
             this.$nextTick(() => {
                 if (textarea) {
