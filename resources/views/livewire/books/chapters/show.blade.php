@@ -6,7 +6,6 @@
         window.addEventListener('popstate', () => {
             if (this.showSummary) {
                 this.showSummary = false;
-                console.log('Restoring scroll position:', this.scrollPosition);
                 this.$nextTick(() => {
                     // Ensure the scroll position is restored after the DOM updates
                     window.scrollTo(this.scrollPosition.x, this.scrollPosition.y);
@@ -25,7 +24,6 @@
         if (this.showSummary) {
             history.pushState({ dummy: true }, '', location.href);
             this.scrollPosition = { x: window.scrollX, y: window.scrollY };
-            console.log('Saving scroll position:', this.scrollPosition);
             // send focus to #sumsum > textarea
             const textarea = document.querySelector('#floating-sum textarea');
             this.$nextTick(() => {
@@ -162,11 +160,9 @@ function bereanBible() {
             }['{{ $book->title }}'.toUpperCase()] ?? '{{ $book->title }}'.toUpperCase();
 
             const chapter = '{{ $chapter_number }}';
-            console.log(book)
             fetch(`https://bible.helloao.org/api/BSB/${book}/${chapter}.json`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.chapter.content)
                     this.state.chapter = data.chapter.content.map(item => {
                         if (item.type === 'verse') {
                             return item.content.map(verseItem => {
