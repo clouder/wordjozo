@@ -1,7 +1,18 @@
 <section class="w-full" x-data="{
     summaryVisible: true,
     showSummary: false,
+    scrollPosition: { x: 0, y: 0 },
     init() {
+        window.addEventListener('popstate', () => {
+            if (this.showSummary) {
+                this.showSummary = false;
+                console.log('Restoring scroll position:', this.scrollPosition);
+                this.$nextTick(() => {
+                    // Ensure the scroll position is restored after the DOM updates
+                    window.scrollTo(this.scrollPosition.x, this.scrollPosition.y);
+                });
+            }
+        });
         const observer = new IntersectionObserver(([entry]) => {
             this.summaryVisible = entry.isIntersecting;
         }, {
@@ -12,13 +23,18 @@
     toggleSummary() {
         this.showSummary = !this.showSummary;
         if (this.showSummary) {
+            history.pushState({ dummy: true }, '', location.href);
+            this.scrollPosition = { x: window.scrollX, y: window.scrollY };
+            console.log('Saving scroll position:', this.scrollPosition);
             // send focus to #sumsum > textarea
             const textarea = document.querySelector('#floating-sum textarea');
-            $nextTick(() => {
+            this.$nextTick(() => {
                 if (textarea) {
                     textarea.focus();
                 }
             });
+        } else {
+            history.back();
         }
     }
 }">
