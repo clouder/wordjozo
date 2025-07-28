@@ -1,4 +1,27 @@
-<section class="w-full">
+<section class="w-full" x-data="{
+    summaryVisible: true,
+    showSummary: false,
+    init() {
+        const observer = new IntersectionObserver(([entry]) => {
+            this.summaryVisible = entry.isIntersecting;
+        }, {
+            threshold: 0.9
+        });
+        observer.observe(document.getElementById('sumsum'));
+    },
+    toggleSummary() {
+        this.showSummary = !this.showSummary;
+        if (this.showSummary) {
+            // send focus to #sumsum > textarea
+            const textarea = document.querySelector('#floating-sum textarea');
+            $nextTick(() => {
+                if (textarea) {
+                    textarea.focus();
+                }
+            });
+        }
+    }
+}">
     <div class="mb-4">
         <flux:heading size="xl" class="text-center">
             <flux:link wire:navigate variant="ghost" href="{{ route('books.show', ['book' => $book->id]) }}">
@@ -7,19 +30,37 @@
         </flux:heading>
         <flux:heading size="lg" class="text-center">{{ __('Chapter') }} {{ $chapter_number }}</flux:heading>
     </div>
-    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
+    <div
+        id="floating-sum"
+        x-show="showSummary"
+        class="fixed top-0 left-0 flex h-full w-full flex-1 flex-col gap-4 rounded-xl p-6 bg-zinc-900/10 bg-clip-padding backdrop-filter backdrop-blur bg-opacity-10 backdrop-saturate-100 backdrop-contrast-100"
+    >
+            <div class="grid auto-rows-min gap-4">
+                <flux:textarea wire:model.live.debounce.500ms="summary" label="Summary" rows="auto" class="w-full" />
+            </div>
+    </div>
+    <div id="sumsum" class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <div class="grid auto-rows-min gap-4">
             <flux:textarea wire:model.live.debounce.500ms="summary" label="Summary" rows="auto" class="w-full" />
         </div>
+    </div>
+    <div
+        x-show="!summaryVisible || showSummary"
+        class="text-lg leading-relaxed text-gray-900 dark:text-gray-100 fixed bottom-0 z-10 mb-4"
+    >
+        <flux:button
+            @click="toggleSummary()"
+        >
+            <span x-text="showSummary ? 'Hide Summary' : 'Show Summary'"></span>
+        </flux:button>
     </div>
     <div
         x-data="bereanBible()"
         class="whitespace-pre-line text-lg leading-relaxed text-gray-900 dark:text-gray-100"
     >
         <div x-text="state.chapter"></div>
-        <div class="text-right">
+        <div class="text-right mb-12">
             <flux:button
-                class="mt-4"
                 icon="chevron-up"
                 @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
             >
