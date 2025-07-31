@@ -17,22 +17,22 @@
             </div>
     </div>
     <template x-if="state.audioLinks && state.audioLink">
-        <div>
-        <div class="mb-6 flex justify-center">
-            <flux:button.group>
-                <flux:button @click="setAudio('gilbert')">Gilbert</flux:button>
-                <flux:button @click="setAudio('hays')">Hays</flux:button>
-                <flux:button @click="setAudio('souer')">Souer</flux:button>
-            </flux:button.group>
-        </div>
+        <div class="p-6 rounded-xl mb-6 ring dark:ring-zinc-900/90 shadow-sm dark:shadow-zinc-100/30 ring-zinc-100/10 shadow-zinc-900/30">
             <audio
-                class="w-full mb-6"
+                class="w-full"
                 controls
                 x-bind:src="state.audioLink"
                 x-show="state.audioLink"
             >
                 Your browser does not support the audio element.
             </audio>
+            <div class="mt-6 flex justify-center">
+                <flux:button.group>
+                    <flux:button @click="setAudio('gilbert')">Gilbert</flux:button>
+                    <flux:button @click="setAudio('hays')">Hays</flux:button>
+                    <flux:button @click="setAudio('souer')">Souer</flux:button>
+                </flux:button.group>
+            </div>
         </div>
     </template>
     <div id="sumsum" class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
