@@ -4,6 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <meta property="og:title" content="WordJozo">
+        <meta property="og:description" content="Distilling the Word down to its essence. One chapter at a time.">
+        <meta property="og:image" content="{{ asset('/og.png') }}">
+        <meta property="og:url" content="{{ url('/') }}">
+        <meta property="og:type" content="website">
+
         <title>WordJozo</title>
 
         <link rel="icon" href="/favicon.ico" sizes="any">
