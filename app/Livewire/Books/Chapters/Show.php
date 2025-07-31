@@ -63,6 +63,6 @@ class Show extends Component
 
     public function render()
     {
-        return view('livewire.books.chapters.show');
+        return view('livewire.books.chapters.show-audio');
     }
 }
