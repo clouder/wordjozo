@@ -67,7 +67,12 @@
                 <div class="flex-1/6"></div>
                 <div class="flex-1/3 text-right text-xl">
                     <div class="py-3">
-                        <a href="{{ route('register') }}" class="font-bold underline hover:no-underline">Sign up</a> today and start your journey of reading, listening, and reflecting—chapter by chapter.</div>
+                        @auth
+                            <a href="{{ route('books.index') }}" class="font-bold underline hover:no-underline">Continue</a>
+                        @else
+                            <a href="{{ route('register') }}" class="font-bold underline hover:no-underline">Sign up</a> today and start
+                        @endauth
+                        your journey of reading, listening, and reflecting—chapter by chapter.</div>
                 </div>
             </main>
         </div>
