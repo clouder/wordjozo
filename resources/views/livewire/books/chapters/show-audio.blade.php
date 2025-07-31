@@ -80,8 +80,11 @@ function bereanBible() {
             this.getChapter(book);
             this.setupSummaryObserver();
         },
-        setAudio(voice) {
+        setAudio(voice, autoPlay = true) {
             this.state.audioLink = this.state.audioLinks[voice];
+
+            if (!autoPlay) return;
+
             this.$nextTick(() => {
                 const audioElement = document.querySelector('audio');
                 if (audioElement) {
@@ -111,7 +114,7 @@ function bereanBible() {
                 .then(response => response.json())
                 .then(data => {
                     this.state.audioLinks = data.thisChapterAudioLinks;
-                    this.setAudio('gilbert'); // Default to Gilbert voice
+                    this.setAudio('gilbert', false);
                     this.state.chapter = data.chapter.content.map(item => {
                         if (item.type === 'verse') {
                             return item.content.map(verseItem => {
