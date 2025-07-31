@@ -71,7 +71,7 @@ Route::get('auth/{provider}/callback', function (string $provider) {
         ]
     );
 
-    auth()->login($existingUser);
+    auth()->login($existingUser, true);
 
     return redirect()->route('books.index')->with('success', 'Logged in with GitHub successfully!');
 })->name('auth.socialite.callback');
