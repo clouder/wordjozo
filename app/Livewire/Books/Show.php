@@ -2,14 +2,16 @@
 
 namespace App\Livewire\Books;
 
-use Livewire\Component;
 use App\Models\Book;
 use Illuminate\Support\Arr;
+use Livewire\Component;
 
 class Show extends Component
 {
     public Book $book;
+
     public $summarized;
+
     public $chapters;
 
     public function mount(Book $book)
@@ -18,7 +20,7 @@ class Show extends Component
 
         $this->chapters = range(1, $this->book->chapter_count);
 
-        $this->summarized =  $this->book->chapters()
+        $this->summarized = $this->book->chapters()
             ->where('user_id', auth()->id())
             ->pluck('number');
 

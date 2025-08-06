@@ -1,8 +1,8 @@
 <?php
 
 use App\Livewire\Books\Index;
-use Livewire\Livewire;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 

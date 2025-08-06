@@ -2,15 +2,18 @@
 
 namespace App\Livewire\Books\Chapters;
 
-use Livewire\Component;
 use App\Models\Book;
 use App\Models\Chapter;
+use Livewire\Component;
 
 class Show extends Component
 {
     public Book $book;
+
     public $chapter;
+
     public $summary;
+
     public $chapter_number;
 
     public function mount(Book $book)
@@ -37,7 +40,7 @@ class Show extends Component
     {
         $value = trim($value);
 
-        if (!$value) {
+        if (! $value) {
             // If the summary is empty, delete the chapter entry
             Chapter::query()
                 ->where('user_id', auth()->id())
@@ -45,7 +48,7 @@ class Show extends Component
                 ->where('number', $this->chapter_number)
                 ->delete();
 
-            $this->chapter = new Chapter();
+            $this->chapter = new Chapter;
 
             return;
         }
@@ -55,7 +58,7 @@ class Show extends Component
                 [
                     'user_id' => auth()->id(),
                     'book_id' => $this->book->id,
-                    'number' => $this->chapter_number
+                    'number' => $this->chapter_number,
                 ],
                 ['summary' => $value]
             );

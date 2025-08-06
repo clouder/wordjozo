@@ -3,11 +3,11 @@
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
-use App\Models\User;
 use App\Models\SocialAccount;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('auth/{provider}', function (string $provider) {
-    if (!in_array($provider, ['github', 'google', 'facebook'])) {
+    if (! in_array($provider, ['github', 'google', 'facebook'])) {
         return redirect()->route('home')->withErrors(['error' => 'Unsupported authentication provider.']);
     }
 
@@ -42,14 +42,14 @@ Route::get('auth/{provider}', function (string $provider) {
 Route::get('auth/{provider}/callback', function (string $provider) {
     $user = Socialite::driver($provider)->user();
 
-    if (!$user) {
+    if (! $user) {
         return redirect()->route('home')->withErrors(['error' => 'Authentication failed.']);
     }
 
     // Check if the user already exists in the database
     $existingUser = User::where('email', $user->getEmail())->first();
 
-    if (!$existingUser) {
+    if (! $existingUser) {
         // If the user does not exist, create a new user
         $existingUser = User::create([
             'name' => $user->getName(),
