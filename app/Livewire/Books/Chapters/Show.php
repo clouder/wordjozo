@@ -16,6 +16,12 @@ class Show extends Component
 
     public $chapter_number;
 
+    public $nextChapter = null;
+
+    public $nextBook = null;
+
+    public $isLastChapterOfBook = false;
+
     public function mount(Book $book)
     {
         $this->book = $book;
@@ -33,6 +39,49 @@ class Show extends Component
 
         if ($this->chapter) {
             $this->summary = $this->chapter->summary;
+        }
+
+        $this->calculateNextChapter();
+    }
+
+    public function updatedChapterNumber(): void
+    {
+        $this->calculateNextChapter();
+    }
+
+    public function calculateNextChapter(): void
+    {
+        if ($this->chapter_number < $this->book->chapter_count) {
+            // There's a next chapter in this book
+            $this->nextChapter = $this->chapter_number + 1;
+            $this->isLastChapterOfBook = false;
+        } else {
+            // This is the last chapter, find the next book
+            $this->isLastChapterOfBook = true;
+            $this->nextBook = Book::where('id', '>', $this->book->id)->first();
+
+            if ($this->nextBook) {
+                $this->nextChapter = 1;
+            }
+        }
+    }
+
+    public function goToNextChapter(): void
+    {
+        if ($this->nextChapter) {
+            if ($this->isLastChapterOfBook && $this->nextBook) {
+                // Go to first chapter of next book
+                $this->redirect(route('books.chapters.show', [
+                    'book' => $this->nextBook->id,
+                    'chapter' => 1,
+                ]));
+            } else {
+                // Go to next chapter in current book
+                $this->redirect(route('books.chapters.show', [
+                    'book' => $this->book->id,
+                    'chapter' => $this->nextChapter,
+                ]));
+            }
         }
     }
 

@@ -63,6 +63,55 @@
             </flux:button>
         </div>
     </div>
+
+    <!-- Next Chapter Navigation -->
+    @if($nextChapter)
+        <div class="mt-8 mb-12 flex justify-center">
+            <div class="w-full max-w-md">
+                @if($isLastChapterOfBook && $nextBook)
+                    <!-- Moving to next book -->
+                    <div class="text-center mb-4">
+                        <flux:badge color="blue" class="mb-2 text-base px-3 py-1">
+                            {{ __('Starting New Book') }}
+                        </flux:badge>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            {{ __('You\'ve completed') }} <strong>{{ $book->title }}</strong>!<br>
+                            {{ __('Continue to') }} <strong>{{ $nextBook->title }}</strong>
+                        </p>
+                    </div>
+                    <flux:button 
+                        wire:click="goToNextChapter" 
+                        variant="primary" 
+                        class="w-full text-lg py-3"
+                        icon="arrow-right"
+                    >
+                        {{ __('Start') }} {{ $nextBook->title }} {{ __('Chapter 1') }}
+                    </flux:button>
+                @else
+                    <!-- Next chapter in same book -->
+                    <flux:button 
+                        wire:click="goToNextChapter" 
+                        variant="primary" 
+                        class="w-full text-lg py-3"
+                        icon="arrow-right"
+                    >
+                        {{ __('Next Chapter') }} ({{ $nextChapter }})
+                    </flux:button>
+                @endif
+            </div>
+        </div>
+    @else
+        <!-- Final chapter of final book -->
+        <div class="mt-8 mb-12 text-center">
+            <flux:badge color="green" class="mb-2 text-base px-3 py-1">
+                {{ __('Congratulations!') }}
+            </flux:badge>
+            <p class="text-gray-600 dark:text-gray-400">
+                {{ __('You\'ve completed the entire Bible!') }}
+            </p>
+        </div>
+    @endif
+
 </section>
 
 <script>
