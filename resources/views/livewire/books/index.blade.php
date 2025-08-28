@@ -28,27 +28,49 @@
                         <!-- Continue reading state -->
                         <div class="flex items-center justify-between">
                             <div class="flex-1">
-                                <div class="mb-2 flex items-center gap-2">
-                                    <flux:icon.book-open class="size-5 text-blue-200" />
-                                    <span class="text-sm font-medium text-blue-200 uppercase tracking-wider">
-                                        {{ __('Continue Your Journey') }}
-                                    </span>
-                                </div>
-                                
-                                <flux:heading size="lg" class="mb-2 text-white">
-                                    {{ $continueReading['message'] }}
-                                </flux:heading>
-                                
-                                <p class="text-blue-100">
-                                    @if($continueReading['is_new_book'])
-                                        {{ __('Ready to start a new book?') }}
-                                    @else
-                                        {{ __('Pick up where you left off') }}
-                                    @endif
-                                    <span class="font-semibold">
-                                        {{ $continueReading['book']->title }} {{ __('Chapter') }} {{ $continueReading['chapter'] }}
-                                    </span>
-                                </p>
+                                @if(isset($continueReading['is_new_user']) && $continueReading['is_new_user'])
+                                    <!-- New user messaging -->
+                                    <div class="mb-2 flex items-center gap-2">
+                                        <flux:icon.book-open class="size-5 text-blue-200" />
+                                        <span class="text-sm font-medium text-blue-200 uppercase tracking-wider">
+                                            {{ __('Welcome to WordJozo') }}
+                                        </span>
+                                    </div>
+                                    
+                                    <flux:heading size="lg" class="mb-2 text-white">
+                                        {{ $continueReading['message'] }}
+                                    </flux:heading>
+                                    
+                                    <p class="text-blue-100">
+                                        {{ __('Begin your study with') }}
+                                        <span class="font-semibold">
+                                            {{ $continueReading['book']->title }} {{ __('Chapter') }} {{ $continueReading['chapter'] }}
+                                        </span>
+                                    </p>
+                                @else
+                                    <!-- Returning user messaging -->
+                                    <div class="mb-2 flex items-center gap-2">
+                                        <flux:icon.book-open class="size-5 text-blue-200" />
+                                        <span class="text-sm font-medium text-blue-200 uppercase tracking-wider">
+                                            {{ __('Continue Your Journey') }}
+                                        </span>
+                                    </div>
+                                    
+                                    <flux:heading size="lg" class="mb-2 text-white">
+                                        {{ $continueReading['message'] }}
+                                    </flux:heading>
+                                    
+                                    <p class="text-blue-100">
+                                        @if($continueReading['is_new_book'])
+                                            {{ __('Ready to start a new book?') }}
+                                        @else
+                                            {{ __('Pick up where you left off') }}
+                                        @endif
+                                        <span class="font-semibold">
+                                            {{ $continueReading['book']->title }} {{ __('Chapter') }} {{ $continueReading['chapter'] }}
+                                        </span>
+                                    </p>
+                                @endif
                             </div>
                             
                             <div class="ml-6">
@@ -58,7 +80,9 @@
                                     class="bg-white text-blue-600 hover:bg-blue-50 border-none shadow-lg text-lg px-8 py-4"
                                     icon="play"
                                 >
-                                    @if($continueReading['is_new_book'])
+                                    @if(isset($continueReading['is_new_user']) && $continueReading['is_new_user'])
+                                        {{ __('Start Reading') }}
+                                    @elseif($continueReading['is_new_book'])
                                         {{ __('Begin') }}
                                     @else
                                         {{ __('Continue') }}
@@ -67,8 +91,8 @@
                             </div>
                         </div>
                         
-                        @if($continueReading['is_new_book'])
-                            <!-- New book celebration -->
+                        @if($continueReading['is_new_book'] && (!isset($continueReading['is_new_user']) || !$continueReading['is_new_user']))
+                            <!-- New book celebration (only for returning users) -->
                             <div class="mt-4 p-3 bg-white/10 rounded-lg backdrop-blur-sm border border-white/20">
                                 <div class="flex items-center gap-2 text-yellow-300">
                                     <flux:icon.sparkles class="size-4" />

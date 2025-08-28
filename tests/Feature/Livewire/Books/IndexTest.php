@@ -123,6 +123,7 @@ it('suggests starting with Genesis chapter 1 for new users', function () {
     expect($continueReading['book']->title)->toBe('Genesis');
     expect($continueReading['chapter'])->toBe(1);
     expect($continueReading['is_new_book'])->toBeTrue();
+    expect($continueReading['is_new_user'])->toBeTrue();
     expect($continueReading['message'])->toBe('Start your Bible journey!');
 });
 
@@ -182,6 +183,7 @@ it('suggests first chapter of next book when current book is completed', functio
     expect($continueReading['book']->id)->toBe($secondBook->id);
     expect($continueReading['chapter'])->toBe(1);
     expect($continueReading['is_new_book'])->toBeTrue();
+    expect($continueReading['is_new_user'])->toBeFalse();
     expect($continueReading['message'])->toBe('Begin Exodus');
 });
 
@@ -227,7 +229,37 @@ it('shows welcome message for new users', function () {
     $response = $this->actingAs($user)->get('/books');
 
     $response->assertStatus(200);
+    $response->assertSee('Welcome to WordJozo');
     $response->assertSee('Start your Bible journey!');
-    $response->assertSee('Genesis Chapter 1');
+    $response->assertSee('Begin your study with');
+    $response->assertSee('Genesis');
+    $response->assertSee('Chapter 1');
+    $response->assertSee('Start Reading');
+    $response->assertDontSee('Continue Your Journey');
+    $response->assertDontSee('Congratulations!');
+});
+
+it('shows book completion celebration for returning users starting new book', function () {
+    $user = \App\Models\User::factory()->create();
+    $firstBook = \App\Models\Book::first(); // Genesis
+
+    // User completes all chapters of Genesis
+    for ($i = 1; $i <= $firstBook->chapter_count; $i++) {
+        \App\Models\Chapter::factory()->create([
+            'user_id' => $user->id,
+            'book_id' => $firstBook->id,
+            'number' => $i,
+            'updated_at' => now()->subHours($firstBook->chapter_count - $i),
+        ]);
+    }
+
+    $response = $this->actingAs($user)->get('/books');
+
+    $response->assertStatus(200);
+    $response->assertSee('Continue Your Journey');
+    $response->assertSee('Begin Exodus');
+    $response->assertSee('Ready to start a new book?');
+    $response->assertSee('Congratulations!');
+    $response->assertSee('completed Genesis');
     $response->assertSee('Begin');
 });

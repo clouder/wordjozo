@@ -55,6 +55,7 @@ class Index extends Component
                 'book' => $firstBook,
                 'chapter' => 1,
                 'is_new_book' => true,
+                'is_new_user' => true,
                 'message' => 'Start your Bible journey!',
             ];
         }
@@ -89,6 +90,7 @@ class Index extends Component
             'book' => $nextBook,
             'chapter' => 1,
             'is_new_book' => true,
+            'is_new_user' => false,
             'message' => 'Begin '.$nextBook->title,
         ];
     }
