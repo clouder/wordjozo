@@ -1,5 +1,89 @@
 <section class="w-full">
-    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
+    <div class="flex h-full w-full flex-1 flex-col gap-6 rounded-xl">
+        
+        <!-- Continue Reading Section -->
+        @if($continueReading)
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700 p-6 shadow-2xl">
+                <!-- Background pattern -->
+                <div class="absolute inset-0 opacity-20">
+                    <x-placeholder-pattern class="size-full stroke-white/30" />
+                </div>
+                
+                <!-- Content -->
+                <div class="relative z-10">
+                    @if(isset($continueReading['is_completed']) && $continueReading['is_completed'])
+                        <!-- Bible completed state -->
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <flux:icon.trophy class="mx-auto size-16 text-yellow-300" />
+                            </div>
+                            <flux:heading size="xl" class="mb-2 text-white">
+                                {{ $continueReading['message'] }}
+                            </flux:heading>
+                            <p class="text-blue-100">
+                                {{ __('What an incredible achievement! You\'ve studied every book of the Bible.') }}
+                            </p>
+                        </div>
+                    @else
+                        <!-- Continue reading state -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="mb-2 flex items-center gap-2">
+                                    <flux:icon.book-open class="size-5 text-blue-200" />
+                                    <span class="text-sm font-medium text-blue-200 uppercase tracking-wider">
+                                        {{ __('Continue Your Journey') }}
+                                    </span>
+                                </div>
+                                
+                                <flux:heading size="lg" class="mb-2 text-white">
+                                    {{ $continueReading['message'] }}
+                                </flux:heading>
+                                
+                                <p class="text-blue-100">
+                                    @if($continueReading['is_new_book'])
+                                        {{ __('Ready to start a new book?') }}
+                                    @else
+                                        {{ __('Pick up where you left off') }}
+                                    @endif
+                                    <span class="font-semibold">
+                                        {{ $continueReading['book']->title }} {{ __('Chapter') }} {{ $continueReading['chapter'] }}
+                                    </span>
+                                </p>
+                            </div>
+                            
+                            <div class="ml-6">
+                                <flux:button 
+                                    wire:click="continueToChapter"
+                                    variant="primary"
+                                    class="bg-white text-blue-600 hover:bg-blue-50 border-none shadow-lg text-lg px-8 py-4"
+                                    icon="play"
+                                >
+                                    @if($continueReading['is_new_book'])
+                                        {{ __('Begin') }}
+                                    @else
+                                        {{ __('Continue') }}
+                                    @endif
+                                </flux:button>
+                            </div>
+                        </div>
+                        
+                        @if($continueReading['is_new_book'])
+                            <!-- New book celebration -->
+                            <div class="mt-4 p-3 bg-white/10 rounded-lg backdrop-blur-sm border border-white/20">
+                                <div class="flex items-center gap-2 text-yellow-300">
+                                    <flux:icon.sparkles class="size-4" />
+                                    <span class="text-sm font-medium">
+                                        {{ __('Congratulations! You\'ve completed') }} {{ \App\Models\Book::where('id', '<', $continueReading['book']->id)->orderBy('id', 'desc')->first()?->title ?? 'your previous book' }}
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+                </div>
+            </div>
+        @endif
+
+        <!-- Books Grid -->
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
             @foreach($books as $book)
                 <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
